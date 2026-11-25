@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pão & Afeto — pães fresquinhos, doces e salgados artesanais feitos com carinho.">
+  <title>Pão & Afeto — Padaria Artesanal</title>
+  <style>
+    :root {
+      --ink: #3a281e;
+      --cream: #fff8ed;
+      --bread: #c8783d;
+      --red: #9b4330;
+      --red-hover: #7d3323;
+      --muted: #665243;
+      --card-bg: #fffdf8;
+      --border: #e5d4c0;
+      --success: #2e6b3e;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: Georgia, 'Times New Roman', serif;
+      line-height: 1.5;
+    }
+
+    /* Cabeçalho e Navegação (Affordance & Consistência) */
+    header {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(58, 40, 30, 0.05);
+    }
+
+    .top {
+      max-width: 1120px;
+      margin: auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      color: var(--red);
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.2s;
+    }
+    .brand:hover { opacity: 0.85; }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px 10px;
+    }
+
+    /* Links com Affordance clara de botão/aba interativa e Status Ativo */
+    nav a {
+      color: var(--ink);
+      font: 600 0.92rem Arial, sans-serif;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    nav a:hover {
+      background: #f5eadb;
+      color: var(--red);
+      border-color: var(--border);
+    }
+
+    nav a.active {
+      background: var(--red);
+      color: #fff;
+      box-shadow: 0 2px 5px rgba(155, 67, 48, 0.25);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 440px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 72px 24px;
+      background: linear-gradient(90deg, rgba(43, 27, 17, 0.74), rgba(43, 27, 17, 0.35)),
+                  linear-gradient(135deg, #8b4b2e, #d6a36c 55%, #f0d5aa);
+      color: white;
+    }
+
+    .hero-inner { max-width: 720px; }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font: 700 0.78rem Arial, sans-serif;
+      color: #f8e5cc;
+    }
+
+    h1 {
+      margin: 14px 0;
+      font-size: clamp(2.4rem, 6.5vw, 4.4rem);
+      line-height: 1.05;
+    }
+
+    .hero p {
+      font-size: 1.18rem;
+      line-height: 1.6;
+      margin: 0 auto 28px;
+      max-width: 600px;
+    }
+
+    /* Botões com Affordance tridimensional e feedback tátil */
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--cream);
+      color: var(--red);
+      padding: 14px 24px;
+      border-radius: 8px;
+      font: 700 0.96rem Arial, sans-serif;
+      text-decoration: none;
+      border: 2px solid transparent;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.24);
+      background: #ffffff;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .button-primary {
+      background: var(--red);
+      color: #fff;
+      box-shadow: 0 3px 8px rgba(155, 67, 48, 0.25);
+    }
+
+    .button-primary:hover {
+      background: var(--red-hover);
+      color: #fff;
+    }
+
+    .button-card {
+      margin-top: 16px;
+      width: 100%;
+      padding: 10px 16px;
+      font-size: 0.9rem;
+      background: #f6ead9;
+      color: var(--red);
+      border: 1px solid #dfc8ae;
+      box-shadow: none;
+    }
+
+    .button-card:hover {
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red);
+      box-shadow: 0 3px 8px rgba(155, 67, 48, 0.2);
+    }
+
+    /* Conteúdo Principal */
+    main {
+      max-width: 1120px;
+      margin: auto;
+      padding: 64px 24px;
+    }
+
+    .intro {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 42px;
+    }
+
+    h2 { font-size: 2.1rem; margin: 0 0 12px; }
+    .intro p, .card p { color: var(--muted); line-height: 1.6; }
+
+    /* Cards Interativos (Affordance de elevação e ação) */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      scroll-margin-top: 90px;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(58, 40, 30, 0.08);
+      border-color: var(--bread);
+    }
+
+    .icon { font-size: 2rem; }
+    .card h3 { margin: 12px 0 8px; font-size: 1.38rem; }
+    .card p { margin: 0; font-size: 0.98rem; }
+
+    /* Formulário de Encomenda / Contato com Prevenção de Erros */
+    .order-section {
+      margin-top: 56px;
+      padding: 36px;
+      border-radius: 12px;
+      background: #f4e6d4;
+      border: 1px solid var(--border);
+      scroll-margin-top: 90px;
+    }
+
+    .order-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 28px;
+    }
+
+    .order-header p { color: var(--muted); margin: 0; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      max-width: 760px;
+      margin: auto;
+      font-family: Arial, sans-serif;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--ink);
+    }
+
+    .helper-text {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    input, select, textarea {
+      padding: 12px 14px;
+      border: 1.5px solid #cbb7a0;
+      border-radius: 7px;
+      font-size: 0.95rem;
+      font-family: Arial, sans-serif;
+      background: #fffdf8;
+      color: var(--ink);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--bread);
+      box-shadow: 0 0 0 3px rgba(200, 120, 61, 0.2);
+    }
+
+    /* Feedback visual de validação (Prevenção de Erros) */
+    input:invalid:not(:placeholder-shown) {
+      border-color: #c93b2b;
+    }
+
+    /* Barra de Status / Notificação Toast (Visibilidade do Status do Sistema) */
+    #status-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--success);
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 8px;
+      font: 600 0.92rem Arial, sans-serif;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 200;
+    }
+
+    #status-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 32px 24px;
+      margin-top: 40px;
+    }
+
+    .foot {
+      max-width: 1120px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 8px;
+      font: 0.92rem Arial, sans-serif;
+    }
+
+    @media (max-width: 760px) {
+      .top { align-items: flex-start; flex-direction: column; }
+      nav { justify-content: flex-start; }
+      .cards { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .hero { min-height: 380px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabeçalho com marca unificada (Consistência) e menu com estado ativo -->
+  <header>
+    <div class="top">
+      <a class="brand" href="#inicio" aria-label="Início Pão & Afeto">🥖 Pão &amp; Afeto</a>
+      <nav aria-label="Menu principal" id="main-nav">
+        <a href="#doces">Doces</a>
+        <a href="#salgados">Salgados</a>
+        <a href="#encomendas">Encomendas</a>
+        <a href="#contato">Contato</a>
+        <a href="#trabalhe">Trabalhe Conosco</a>
+        <a href="#conta">Conta</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="inicio">
+    <div class="hero-inner">
+      <div class="eyebrow">Fornadas fresquinhas, todos os dias</div>
+      <h1>Um pedacinho de casa em cada mordida.</h1>
+      <p>Pães de fermentação natural, receitas de família e aquele cheirinho de café passado na hora que dá vontade de ficar.</p>
+      <a class="button" href="#doces">Explorar nosso cardápio ↓</a>
+    </div>
+  </section>
+
+  <main>
+    <div class="intro">
+      <h2>Bem-vindo à Pão &amp; Afeto</h2>
+      <p>Cada fornada é preparada com ingredientes selecionados e muito cuidado. Escolha o que deseja saborear ou encomendar hoje.</p>
+    </div>
+
+    <!-- Cards com Affordance clara de ação -->
+    <section class="cards" aria-label="Nossas opções">
+      <article class="card" id="doces">
+        <div>
+          <div class="icon" aria-hidden="true">🍰</div>
+          <h3>Doces Artesanais</h3>
+          <p>Bolos caseiros, tortas, sonhos recheados e outras delícias para adoçar o seu dia.</p>
+        </div>
+        <button type="button" class="button button-card" onclick="selecionarCategoria('Doces Artesanais')">Ver opções de doces →</button>
+      </article>
+
+      <article class="card" id="salgados">
+        <div>
+          <div class="icon" aria-hidden="true">🥐</div>
+          <h3>Pães e Salgados</h3>
+          <p>Pães rústicos, croissants folhados, empadas e salgados assados sempre quentinhos.</p>
+        </div>
+        <button type="button" class="button button-card" onclick="selecionarCategoria('Pães e Salgados')">Ver pães e salgados →</button>
+      </article>
+
+      <article class="card" id="encomendas">
+        <div>
+          <div class="icon" aria-hidden="true">🎂</div>
+          <h3>Encomendas para Festas</h3>
+          <p>Conte sua ocasião para prepararmos kits completos, bolos decorados e tábuas de frios.</p>
+        </div>
+        <a href="#formulario-pedido" class="button button-card">Fazer encomenda →</a>
+      </article>
+
+      <article class="card" id="contato">
+        <div>
+          <div class="icon" aria-hidden="true">💬</div>
+          <h3>Fale Conosco</h3>
+          <p>Tire dúvidas sobre ingredientes, horários das fornadas ou faça pedidos sob medida.</p>
+        </div>
+        <a href="#formulario-pedido" class="button button-card">Enviar mensagem →</a>
+      </article>
+
+      <article class="card" id="trabalhe">
+        <div>
+          <div class="icon" aria-hidden="true">🤝</div>
+          <h3>Trabalhe Conosco</h3>
+          <p>Gosta de atendimento acolhedor, cozinha e pão quentinho? Venha fazer parte da equipe.</p>
+        </div>
+        <button type="button" class="button button-card" onclick="mostrarStatus('Envie seu currículo para talentos@paoeafeto.com.br')">Ver vagas abertas →</button>
+      </article>
+
+      <article class="card" id="conta">
+        <div>
+          <div class="icon" aria-hidden="true">👤</div>
+          <h3>Minha Conta</h3>
+          <p>Acesse seu perfil para acompanhar o andamento das fornadas e repetir pedidos favoritos.</p>
+        </div>
+        <button type="button" class="button button-card" onclick="mostrarStatus('Área do cliente: faça seu pedido abaixo para criar seu acesso rápido.')">Acessar minha conta →</button>
+      </article>
+    </section>
+
+    <!-- Seção Interativa com Prevenção de Erros e Feedback de Status -->
+    <section class="order-section" id="formulario-pedido" aria-labelledby="titulo-pedido">
+      <div class="order-header">
+        <h2 id="titulo-pedido">Tem festa ou café especial chegando?</h2>
+        <p>Preencha os dados abaixo para reservar sua fornada ou encomenda. Confirmamos em até 30 minutos.</p>
+      </div>
+
+      <form class="form-grid" id="form-encomenda" onsubmit="enviarPedido(event)">
+        <div class="form-group">
+          <label for="nome">Seu nome completo *</label>
+          <input type="text" id="nome" name="nome" placeholder="Ex: Maria Silva" required minlength="3">
+        </div>
+
+        <div class="form-group">
+          <label for="telefone">WhatsApp para confirmação *</label>
+          <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" pattern="\(?\d{2}\)?\s?\d{4,5}-?\d{4}" required>
+          <span class="helper-text">Formato: (DDD) 90000-0000</span>
+        </div>
+
+        <div class="form-group">
+          <label for="categoria">O que você deseja? *</label>
+          <select id="categoria" name="categoria" required>
+            <option value="">Selecione uma opção...</option>
+            <option value="Doces Artesanais">Doces Artesanais</option>
+            <option value="Pães e Salgados">Pães e Salgados</option>
+            <option value="Encomenda para Festa">Encomenda para Festa</option>
+            <option value="Dúvida / Contato">Outro / Dúvida</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="data-retirada">Data desejada para retirada *</label>
+          <input type="date" id="data-retirada" name="data-retirada" required>
+          <span class="helper-text">Encomendas requerem 24h de antecedência</span>
+        </div>
+
+        <div class="form-group full">
+          <label for="detalhes">Detalhes do pedido ou mensagem *</label>
+          <textarea id="detalhes" name="detalhes" rows="3" placeholder="Conte-nos os itens, quantidades ou observações..." required></textarea>
+        </div>
+
+        <div class="form-group full" style="text-align: center; margin-top: 8px;">
+          <button type="submit" class="button button-primary">Confirmar solicitação ✓</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- Notificação Flutuante (Visibilidade do Status do Sistema) -->
+  <div id="status-toast" role="status" aria-live="polite">
+    <span id="status-icon">✓</span>
+    <span id="status-text">Ação realizada com sucesso!</span>
+  </div>
+
+  <footer>
+    <div class="foot">
+      <span>© 2026 Pão &amp; Afeto — Padaria Artesanal</span>
+      <span>Feito com carinho, servido quentinho.</span>
+    </div>
+  </footer>
+
+  <script>
+    // 1. Prevenção de Erros: Impede seleção de datas passadas no campo de retirada
+    const inputData = document.getElementById('data-retirada');
+    const hoje = new Date().toISOString().split('T')[0];
+    inputData.setAttribute('min', hoje);
+
+    // 2. Visibilidade do Status do Sistema: Destaca no menu a seção visível no momento
+    const navLinks = document.querySelectorAll('#main-nav a');
+    const sections = document.querySelectorAll('article.card');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 140;
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // 3. Feedback imediato (Toast) para ações do usuário
+    let toastTimeout;
+    function mostrarStatus(mensagem) {
+      const toast = document.getElementById('status-toast');
+      const text = document.getElementById('status-text');
+      text.textContent = mensagem;
+      toast.classList.add('show');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000);
+    }
+
+    // 4. Integração fluida entre os cards e o formulário
+    function selecionarCategoria(categoria) {
+      const select = document.getElementById('categoria');
+      select.value = categoria;
+      document.getElementById('formulario-pedido').scrollIntoView({ behavior: 'smooth' });
+      mostrarStatus(`Categoria "${categoria}" selecionada no formulário.`);
+    }
+
+    // 5. Confirmação e Prevenção de Erros no envio do formulário
+    function enviarPedido(event) {
+      event.preventDefault();
+      const nome = document.getElementById('nome').value;
+      const categoria = document.getElementById('categoria').value;
+      mostrarStatus(`Obrigado, ${nome}! Sua solicitação de ${categoria} foi enviada.`);
+      event.target.reset();
+    }
+  </script>
+
+</body>
+</html>
